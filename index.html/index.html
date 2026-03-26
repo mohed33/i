@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قهوة 506</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+header{background:#000;color:#fff;text-align:center;padding:15px;font-size:20px}
+.container{padding:15px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.product{background:#fff;padding:15px;border-radius:15px;text-align:center}
+button{padding:10px;border:none;border-radius:10px;width:100%;margin-top:10px}
+.add{background:#000;color:#fff}
+.cart{position:fixed;bottom:0;width:100%;background:#fff;padding:15px;border-top:2px solid #ddd}
+.checkout{background:#28a745;color:white}
+</style>
+</head>
+
+<body>
+
+<header>☕ قهوة 506</header>
+
+<div class="container">
+<div class="products">
+
+<div class="product">
+<p>V60 ice</p>
+<p>13 ريال</p>
+<button class="add" onclick="add('V60 ice',13)">إضافة</button>
+</div>
+
+<div class="product">
+<p>V60 hot</p>
+<p>14 ريال</p>
+<button class="add" onclick="add('V60 hot',14)">إضافة</button>
+</div>
+
+<div class="product">
+<p>لاتيه</p>
+<p>13 ريال</p>
+<button class="add" onclick="add('لاتيه',13)">إضافة</button>
+</div>
+
+<div class="product">
+<p>كورتادو</p>
+<p>10 ريال</p>
+<button class="add" onclick="add('كورتادو',10)">إضافة</button>
+</div>
+
+</div>
+</div>
+
+<div class="cart">
+<p id="total">المجموع: 0 ريال</p>
+<button class="checkout" onclick="checkout()">إتمام الطلب</button>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function add(name, price){
+  cart.push({name, price});
+  total += price;
+  document.getElementById("total").textContent = "المجموع: " + total + " ريال";
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert("السلة فاضية");
+    return;
+  }
+
+  let name = prompt("اسمك");
+  let address = prompt("العنوان");
+  let phone = prompt("رقم الجوال");
+
+  if(!name || !address || !phone){
+    alert("لازم تعبي البيانات");
+    return;
+  }
+
+  // 🧾 فاتورة
+  let invoice = "🧾 فاتورة قهوة 506\n\n";
+  cart.forEach(item=>{
+    invoice += item.name + " - " + item.price + " ريال\n";
+  });
+  invoice += "\n💰 المجموع: " + total + " ريال";
+
+  // 🟢 واتساب
+  let whatsapp = "https://wa.me/97430003244?text=" + encodeURIComponent(
+    "طلب جديد:\n\n" + invoice + "\n\n📦 " + address + "\n👤 " + name + "\n📞 " + phone
+  );
+
+  window.open(whatsapp, "_blank");
+}
+</script>
+
+</body>
+</html>
