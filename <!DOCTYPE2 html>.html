@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر الملابس</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+header{background:#111;color:#fff;text-align:center;padding:15px;font-size:20px}
+.container{padding:15px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.product{background:#fff;padding:15px;border-radius:15px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+button{padding:10px;border:none;border-radius:10px;width:100%;margin-top:10px;background:#111;color:#fff}
+.cart{position:fixed;bottom:0;width:100%;background:#fff;padding:15px;border-top:2px solid #ddd}
+.checkout{background:#28a745;color:white}
+</style>
+</head>
+<body>
+
+<header>👕 متجر الأناقة</header>
+
+<div class="container">
+<div class="products">
+
+<div class="product">
+<p>تيشيرت رجالي</p>
+<p>80 ريال</p>
+<button onclick="add('تيشيرت رجالي',80)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>هودي شبابي</p>
+<p>150 ريال</p>
+<button onclick="add('هودي شبابي',150)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>بنطلون جينز</p>
+<p>120 ريال</p>
+<button onclick="add('بنطلون جينز',120)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>جاكيت شتوي</p>
+<p>220 ريال</p>
+<button onclick="add('جاكيت شتوي',220)">أضف للسلة</button>
+</div>
+
+</div>
+</div>
+
+<div class="cart">
+<p id="total">المجموع: 0 ريال</p>
+<button class="checkout" onclick="checkout()">🛍️ إتمام الطلب</button>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function add(name, price){
+  cart.push({name, price});
+  total += price;
+  document.getElementById('total').textContent = 'المجموع: ' + total + ' ريال';
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert('السلة فاضية');
+    return;
+  }
+
+  let name = prompt('اكتب اسمك');
+  let address = prompt('اكتب العنوان');
+  let phone = prompt('رقم الجوال');
+
+  if(!name || !address || !phone){
+    alert('لازم تعبي البيانات');
+    return;
+  }
+
+  let invoice = '🧾 فاتورة متجر الملابس\n\n';
+  cart.forEach(item => {
+    invoice += item.name + ' - ' + item.price + ' ريال\n';
+  });
+  invoice += '\n💰 المجموع: ' + total + ' ريال';
+
+  alert(invoice + '\n\n📦 سيتم التوصيل إلى: ' + address);
+}
+</script>
+
+</body>
+</html>
